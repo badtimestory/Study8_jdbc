@@ -10,18 +10,24 @@ package com.iu.s1.start;
 import java.util.Scanner;
 
 import com.iu.s1.department.DepartMentController;
+import com.iu.s1.employee.EmployeeController;
+import com.iu.s1.location.LocationController;
 
 public class FrontController {
 	private Scanner sc;
 	private DepartMentController departMentController;
 	// LocationController
+	private LocationController locationController;
 	// EmployeeController
+	private EmployeeController employeeController;
 	
 	public FrontController() {
 		sc= new Scanner(System.in);
 		departMentController = new DepartMentController();
 		// LocationController
+		locationController = new LocationController();
 		// EmployeeController
+		employeeController = new EmployeeController();
 	}
 	
 	public void mainStart() throws Exception {
@@ -37,12 +43,14 @@ public class FrontController {
 			switch (select) {
 			case 1:
 				// employeeController의 start 메서드 호출
+				employeeController.start();
 				break;
 			case 2:
 				departMentController.start();
 				break;
 			case 3:
 				// locationController의 start 메서드 호출
+				locationController.start();
 				break;
 			default:
 				flag = false;

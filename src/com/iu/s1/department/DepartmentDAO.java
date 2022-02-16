@@ -16,6 +16,55 @@ public class DepartmentDAO {
 		dbConnector = new DBConnector();
 	}
 	
+	public int setUpdate(DepartmentDTO dep) throws Exception {
+		Connection conn = dbConnector.getConnect();
+		// UPDATE QUERY
+		String sql = "UPDATE DEPARTMENTS SET DEPARTMENT_NAME = ? "
+				+ "WHERE DEPARTMENT_ID = ?";
+		PreparedStatement st = conn.prepareStatement(sql);
+		st.setString(1, dep.getDepartment_name());
+		st.setInt(2, dep.getDepartment_id());
+		int result = st.executeUpdate();
+		st.close();
+		conn.close();
+		
+		return result;
+	}
+	
+	public int setDelete(DepartmentDTO dep) throws Exception {
+		Connection conn = dbConnector.getConnect();
+		// DELETE QUERY
+		String sql = "DELETE DEPARTMENT WHERE DEPARTMENT_ID = ?";
+		PreparedStatement st = conn.prepareStatement(sql);
+		st.setInt(1, dep.getDepartment_id());
+		int result = st.executeUpdate();
+		st.close();
+		conn.close();
+		
+		return result;
+	}
+	
+	public int setInsert(DepartmentDTO dep) throws Exception {
+		// 1. DB 연결
+		Connection conn = dbConnector.getConnect();
+		// 2. SQL Query 작성
+		String sql = "INSERT INTO(DEPARTMENT_ID, DEPARTMENT_NAME, MANAGER_ID, LOCATION_ID)"
+				+ "VALUES (DEPARTMENTS_SEQ.nextval, ?, ?, ?)";
+		// 3. 미리 전송
+		PreparedStatement st = conn.prepareStatement(sql);
+		// 4. ? 세팅
+		st.setString(1, dep.getDepartment_name());
+		st.setInt(2, dep.getManager_id());
+		st.setInt(3, dep.getLocation_id());
+		// 5. 전송 후 결과처리
+		int result = st.executeUpdate();
+		// 6. 자원 해제
+		st.close();
+		conn.close();
+		
+		return result;
+	}
+	
 	// 부서번호로 조회
 	public DepartmentDTO getOne(DepartmentDTO dep) throws Exception{
 		DepartmentDTO departmentDTO = null;
